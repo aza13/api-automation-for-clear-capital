@@ -2,6 +2,7 @@ import constants.FilePathNames;
 import helper.TestDataUsaHelper;
 import io.restassured.response.Response;
 import org.apache.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -51,23 +52,14 @@ public class TestDataUSA {
          String states = response.jsonPath().getString("data[" + i + "].State");
          String arr [] = states.split(" ");
          Set<String> uniqueStates = new HashSet<>(Arrays.asList(arr));
-         if (uniqueStates.size() == arr.length) {
-            System.out.println("There are no duplicate states");
-         }else {
-            System.out.println("There are duplicate states");
-         }
+         Assert.assertTrue(uniqueStates.size() == arr.length);
       }
-
 
       for (int i = 0; i < count; i++) {
          String years = response.jsonPath().getString("data[" + i + "].Year");
          String [] arrYears = years.split(" ");
          Set<String> uniqueYears = new HashSet<>(Arrays.asList(arrYears));
-         if (uniqueYears.size() ==1) {
-            System.out.println("Same year");
-         }
-
-
+         Assert.assertTrue(uniqueYears.size() == 1);
       }
 
    }
